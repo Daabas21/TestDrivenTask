@@ -11,10 +11,10 @@ public class AppUser {
     }
 
     public String getUsername() {
-        return null;
+        return username;
     }
 
     public String getPassword() {
-        return null;
+        return password;
     }
 }
