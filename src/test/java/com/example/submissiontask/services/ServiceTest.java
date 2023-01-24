@@ -38,7 +38,7 @@ public class ServiceTest {
     @Test
     public void findByUsernameAndPassword_ifExist_returnTrue(){
         //Given
-        AppUser alex = new AppUser("Alex", "s");
+        AppUser alex = new AppUser("Alex", "pass");
         when(appUserRepo.findByUsernameAndPassword(any())).thenReturn(Optional.of(new AppUser("Alex", "pass")));
         Service service = new Service(appUserRepo);
 
