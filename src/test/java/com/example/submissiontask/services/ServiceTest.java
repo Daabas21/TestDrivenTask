@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ServiceTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"hassan, pass", "pavel, password", "viktor, pass"})
+    @CsvSource(value = {"hassan, pass", "pavel, password", "viktor, pas"})
     public void checkUsernamePasswordLoginAuthorization(String username, String password){
         //Given
         Service service = new Service();
