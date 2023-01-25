@@ -5,7 +5,6 @@ import com.example.submissiontask.Repo.AppUserRepo;
 import com.example.submissiontask.entity.AppUser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
@@ -49,6 +48,7 @@ public class ServiceTest {
         //Then
         verify(appUserRepo, times(2)).findByUsernameAndPassword(alex);
         assertEquals(alex, appUser);
+        assertThrows(LoginException.class, () -> service.findByUsernameAndPassword(new AppUser("Alex", "pass")));
     }
 
     @Test
