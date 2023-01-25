@@ -63,7 +63,7 @@ public class ServiceTest {
 
         //Then
         verify(appUserRepo, times(2)).findByUsernameAndPassword(any());
-        assertThrows(LoginException.class, () -> service.findByUsernameAndPassword(appUser));
+        assertThrows(LoginException.class, () -> service.findByUsernameAndPassword(new AppUser("alex", "pass")));
 
     }
 
