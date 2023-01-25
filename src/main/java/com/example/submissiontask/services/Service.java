@@ -1,10 +1,10 @@
 package com.example.submissiontask.services;
 
+import com.example.submissiontask.LoginException;
 import com.example.submissiontask.Repo.AppUserRepo;
 import com.example.submissiontask.entity.AppUser;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Service {
 
@@ -31,6 +31,9 @@ public class Service {
     }
 
     public AppUser findByUsernameAndPassword(AppUser appUser) {
+        if (appUserRepo.findByUsernameAndPassword(appUser).isEmpty()){
+            throw new LoginException();
+        }
         return appUserRepo.findByUsernameAndPassword(appUser).orElseThrow();
     }
 }

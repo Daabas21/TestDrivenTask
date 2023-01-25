@@ -1,9 +1,11 @@
 package com.example.submissiontask.services;
 
+import com.example.submissiontask.LoginException;
 import com.example.submissiontask.Repo.AppUserRepo;
 import com.example.submissiontask.entity.AppUser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
@@ -11,8 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -39,14 +40,33 @@ public class ServiceTest {
     public void findByUsernameAndPassword_ifExist_returnTrue(){
         //Given
         AppUser alex = new AppUser("Alex", "pass");
-        when(appUserRepo.findByUsernameAndPassword(any())).thenReturn(Optional.of(new AppUser("Alex", "pass")));
+        when(appUserRepo.findByUsernameAndPassword(alex)).thenReturn(Optional.of(new AppUser("Alex", "pass")));
         Service service = new Service(appUserRepo);
 
         //When
         AppUser appUser = service.findByUsernameAndPassword(alex);
 
         //Then
-        verify(appUserRepo, times(1)).findByUsernameAndPassword(appUser);
+        verify(appUserRepo, times(2)).findByUsernameAndPassword(alex);
+        assertEquals(alex, appUser);
     }
+
+    @Test
+    public void findByUsernameAndPassword_ifNotExist_throwException(){
+        //Given
+        AppUser hassan = new AppUser("hassan", "pass");
+        when(appUserRepo.findByUsernameAndPassword(hassan)).thenReturn(Optional.of(new AppUser("hassan", "pass")));
+        Service service = new Service(appUserRepo);
+
+        //When
+        AppUser appUser = service.findByUsernameAndPassword(hassan);
+
+        //Then
+        verify(appUserRepo, times(2)).findByUsernameAndPassword(any());
+        assertThrows(LoginException.class, () -> service.findByUsernameAndPassword(appUser));
+
+    }
+
+
 
 }
