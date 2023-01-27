@@ -39,14 +39,14 @@ public class ServiceTest {
     public void findByUsernameAndPassword_ifExist_returnTrue(){
         //Given
         AppUser alex = new AppUser("Alex", "pass");
-        when(appUserRepo.findByUsernameAndPassword(alex)).thenReturn(Optional.of(new AppUser("Alex", "pass")));
+        when(appUserRepo.findByUsernameAndPassword("Alex", "pass")).thenReturn(Optional.of(new AppUser("Alex", "pass")));
         Service service = new Service(appUserRepo);
 
         //When
         AppUser appUser = service.findByUsernameAndPassword(alex);
 
         //Then
-        verify(appUserRepo, times(2)).findByUsernameAndPassword(alex);
+        verify(appUserRepo, times(2)).findByUsernameAndPassword("Alex", "pass");
         assertEquals(alex, appUser);
         assertThrows(LoginException.class, () -> service.findByUsernameAndPassword(new AppUser("alex", "pass")));
     }
@@ -55,14 +55,14 @@ public class ServiceTest {
     public void findByUsernameAndPassword_ifNotExist_throwException(){
         //Given
         AppUser hassan = new AppUser("hassan", "pass");
-        when(appUserRepo.findByUsernameAndPassword(hassan)).thenReturn(Optional.of(new AppUser("hassan", "pass")));
+        when(appUserRepo.findByUsernameAndPassword("hassan", "pass")).thenReturn(Optional.of(new AppUser("hassan", "pass")));
         Service service = new Service(appUserRepo);
 
         //When
         AppUser appUser = service.findByUsernameAndPassword(hassan);
 
         //Then
-        verify(appUserRepo, times(2)).findByUsernameAndPassword(any());
+        verify(appUserRepo, times(2)).findByUsernameAndPassword(anyString(),anyString());
         assertThrows(LoginException.class, () -> service.findByUsernameAndPassword(new AppUser("alex", "pass")));
 
     }

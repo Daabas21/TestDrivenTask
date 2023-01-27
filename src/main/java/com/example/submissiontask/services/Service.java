@@ -31,9 +31,9 @@ public class Service {
     }
 
     public AppUser findByUsernameAndPassword(AppUser appUser) {
-        if (appUserRepo.findByUsernameAndPassword(appUser).isEmpty()){
+        if (appUserRepo.findByUsernameAndPassword(appUser.getUsername(), appUser.getPassword()).isEmpty()){
             throw new LoginException();
         }
-        return appUserRepo.findByUsernameAndPassword(appUser).orElseThrow();
+        return appUserRepo.findByUsernameAndPassword(appUser.getUsername(), appUser.getPassword()).orElseThrow();
     }
 }
