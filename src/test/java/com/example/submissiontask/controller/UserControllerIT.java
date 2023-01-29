@@ -28,8 +28,8 @@ public class UserControllerIT {
         //Given
         String username = "hassan";
         long id = 1;
-        AppUser appUser = new AppUser(id, username, "pass");
-        when(userService.findUserByUsernameAndPassword(username,"pass")).thenReturn(appUser);
+        AppUser appUser = new AppUser(id, username);
+        when(userService.findUserByUsername(username)).thenReturn(appUser);
 
         //When, Then
         mockMvc
@@ -37,6 +37,6 @@ public class UserControllerIT {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(id));
 
-        verify(userService, times(1)).findUserByUsernameAndPassword(username, "pass");
+        verify(userService, times(1)).findUserByUsername(username);
     }
 }
