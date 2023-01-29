@@ -30,6 +30,7 @@ class SubmissionTaskApplicationTests {
     void contextLoads() {
     }
 
+    @Test
     public void findUser_withQueryParam_shouldReturnUser() throws Exception {
         //Given
         String username = "hassan";
