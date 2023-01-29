@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -35,7 +36,8 @@ public class UserControllerIT {
         mockMvc
                 .perform(MockMvcRequestBuilders.get("/api/user?username="+ username))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(id));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(id))
+                .andDo(print());
 
         verify(userService, times(1)).findUserByUsername(username);
     }
